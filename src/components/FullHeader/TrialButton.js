@@ -43,6 +43,7 @@ class TrialButton extends React.Component {
 			isCluster,
 			trialMessage,
 			clusters,
+			isTrialEligible,
 		} = this.props;
 
 		const clusterTrialMessage =
@@ -69,11 +70,12 @@ class TrialButton extends React.Component {
 		if (clusters && clusters.length) {
 			unPaidClusters = clusters.filter(i => i.subscription_id === '');
 		}
-		if (isCluster && unPaidClusters.length > 0) {
+		if (isCluster && unPaidClusters.length > 0 && !isTrialEligible) {
 			return (
 				<>
 					{this.state.isStripeCheckoutOpen && (
 						<StripeCheckout
+							isTrialEligible={isTrialEligible}
 							visible={this.state.isStripeCheckoutOpen}
 							plan={
 								PLAN_LABEL[
@@ -112,7 +114,24 @@ class TrialButton extends React.Component {
 			);
 		}
 
-		return <></>;
+		let content;
+		if (isTrialEligible) {
+			content = <Tag color="green">Search Cluster: Trial Available</Tag>;
+		} else if (clusterDaysLeft > 0 && clusterDaysLeft <= 14) {
+			content = (
+				<Tooltip title={tooltipTitle}>
+					<Tag color="red">
+						{`Trial expires in ${clusterDaysLeft} ${
+							clusterDaysLeft > 1 ? 'days' : 'day'
+						}`}
+					</Tag>
+				</Tooltip>
+			);
+		} else {
+			content = <Tag color="red">Trial has expired</Tag>;
+		}
+
+		return <>{content}</>;
 	}
 }
 
@@ -130,6 +149,7 @@ TrialButton.propTypes = {
 	daysLeft: PropTypes.number.isRequired,
 	clusterDaysLeft: PropTypes.number.isRequired,
 	clusters: PropTypes.array,
+	isTrialEligible: PropTypes.bool,
 };
 
 export default TrialButton;

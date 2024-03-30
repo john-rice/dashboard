@@ -26,6 +26,7 @@ const StripeCheckout = ({
 	onCancel,
 	onSubmit,
 	isSLSCluster,
+	isTrialEligible,
 }) => {
 	const [paymentMethods, setPaymentMethods] = useState({
 		loading: true,
@@ -59,6 +60,15 @@ const StripeCheckout = ({
 			isCancelled = true;
 		};
 	}, []);
+
+	// Function to return the subscription string based on isTrialEligible
+	const getSubscriptionString = () => {
+		if (isTrialEligible) {
+			return `You will have ${trialDays[plan]} trial days. Thereafter, usage is billed at $${price}/hr which comes to $${monthlyPrice}/mo at the end of the subscription cycle based on actual usage`;
+		}
+		return `Billed at $${price}/hr which comes to $${monthlyPrice}/mo at the end of the subscription cycle based on actual usage`;
+	};
+
 	return (
 		<Modal
 			open={visible}
@@ -76,14 +86,10 @@ const StripeCheckout = ({
 						Subscribe for {plan} cluster
 					</div>
 					<p style={{ marginTop: 15, color: 'rgba(0, 0, 0, 0.65)' }}>
-						{isSLSCluster
-							? `Billed at $${monthlyPrice}/mo at the start of the subscription cycle`
-							: `You will have ${trialDays[plan]} trial days. Thereafter, usage is billed at $${price}/hr which comes to $${monthlyPrice}/mo at the end of the subscription cycle based on actual usage`}
+						{getSubscriptionString()}
 					</p>
 				</div>
 			}
-			Billed
-			at
 			destroyOnClose
 			onCancel={onCancel}
 		>
@@ -134,6 +140,7 @@ StripeCheckout.propTypes = {
 	onCancel: PropTypes.func.isRequired,
 	onSubmit: PropTypes.func.isRequired,
 	isSLSCluster: PropTypes.bool,
+	isTrialEligible: PropTypes.bool,
 };
 
 export default StripeCheckout;

@@ -12,6 +12,7 @@ class PricingSlider extends Component {
 		currValue: PropTypes.number.isRequired,
 		showNoCardNeeded: PropTypes.bool,
 		sliderProps: PropTypes.object,
+		isTrialEligible: PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -84,7 +85,7 @@ class PricingSlider extends Component {
 		const { marks, active, value, trialDays } = this.state;
 		console.log('marks', marks, 'active', active, 'value', value); // eslint-disable-line no-console
 		const mark = marks[active] || {};
-		const { sliderProps } = this.props;
+		const { sliderProps, isTrialEligible = false } = this.props;
 		return (
 			<Fragment>
 				<div className="col grow expanded">
@@ -100,7 +101,9 @@ class PricingSlider extends Component {
 						value={value}
 						{...sliderProps}
 					/>
-					<SubscriptionDetails trialDays={trialDays[active]} />
+					{isTrialEligible && (
+						<SubscriptionDetails trialDays={trialDays[active]} />
+					)}
 				</div>
 				<div className="col grey">
 					<div className={clusterInfo}>

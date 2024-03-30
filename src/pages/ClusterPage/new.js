@@ -652,7 +652,7 @@ class NewCluster extends Component {
 			changed,
 			pricing_plan,
 		} = this.state;
-		const { isUsingClusterTrial } = this.props;
+		const { isUsingClusterTrial, isTrialEligible } = this.props;
 
 		if (isLoading) return <Loader />;
 		const versions =
@@ -776,6 +776,7 @@ class NewCluster extends Component {
 				<Container>
 					{this.state.isStripeCheckoutOpen && (
 						<StripeCheckout
+							isTrialEligible={isTrialEligible}
 							visible={this.state.isStripeCheckoutOpen}
 							plan={PLAN_LABEL[this.state.pricing_plan]}
 							price={EFFECTIVE_PRICE_BY_PLANS[
@@ -1332,12 +1333,14 @@ class NewCluster extends Component {
 const mapStateToProps = state => ({
 	isUsingClusterTrial: get(state, '$getUserPlan.cluster_trial') || false,
 	clusterTrialEndDate: get(state, '$getUserPlan.cluster_tier_validity') || 0,
+	isTrialEligible: get(state, '$getUserPlan.is_trial_eligible', false),
 });
 
 NewCluster.propTypes = {
 	isUsingClusterTrial: PropTypes.bool.isRequired,
 	history: PropTypes.object.isRequired,
 	clusterTrialEndDate: PropTypes.number,
+	isTrialEligible: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, null)(NewCluster);
