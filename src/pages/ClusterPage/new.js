@@ -809,6 +809,7 @@ class NewCluster extends Component {
 									<p> Scale as you go </p>
 								</div>
 								<PricingSlider
+									isTrialEligible={isTrialEligible}
 									key={
 										this.state.provider +
 										String(this.isLegacyPage())
