@@ -100,12 +100,7 @@ class PricingSlider extends Component {
 						value={value}
 						{...sliderProps}
 					/>
-					<SubscriptionDetails
-						startDate="Jan 23"
-						firstInvoiceDate="Feb 23"
-						trialDays={trialDays[active]}
-						trialEndDate="Jan 31"
-					/>
+					<SubscriptionDetails trialDays={trialDays[active]} />
 				</div>
 				<div className="col grey">
 					<div className={clusterInfo}>

@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SubscriptionDetails({
-	startDate,
-	firstInvoiceDate,
-	trialDays,
-	trialEndDate,
-}) {
+function SubscriptionDetails({ trialDays }) {
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
@@ -42,6 +37,30 @@ function SubscriptionDetails({
 	const invoiceIcon = '🧾'; // Placeholder icon
 	const trialIcon = '⏳'; // Placeholder icon
 
+	const currentDate = new Date();
+	const formattedCurrentDate = currentDate.toLocaleDateString('en-US', {
+		month: 'short',
+		day: 'numeric',
+		year: 'numeric',
+	});
+
+	const nextInvoiceDate = new Date(currentDate);
+	nextInvoiceDate.setMonth(nextInvoiceDate.getMonth() + 1);
+	const formattedNextInvoiceDate = nextInvoiceDate.toLocaleDateString(
+		'en-US',
+		{
+			month: 'short',
+			day: 'numeric',
+			year: 'numeric',
+		},
+	);
+	const trialEndDate = new Date(currentDate);
+	trialEndDate.setDate(trialEndDate.getDate() + trialDays);
+	const formattedTrialEndDate = trialEndDate.toLocaleDateString('en-US', {
+		month: 'short',
+		day: 'numeric',
+		year: 'numeric',
+	});
 	return (
 		<>
 			<div className="container" style={containerStyle}>
@@ -49,7 +68,7 @@ function SubscriptionDetails({
 					<span style={iconStyle}>{subscriptionIcon}</span>
 					<div>
 						<div style={titleStyle}>Subscription starts</div>
-						<div>{startDate}</div>
+						<div>{formattedCurrentDate}</div>
 					</div>
 				</div>
 				<div style={itemStyle}>
@@ -57,7 +76,7 @@ function SubscriptionDetails({
 					<div>
 						<div style={titleStyle}>First invoice</div>
 						<div>Total depends on usage</div>
-						<div>Bills on {firstInvoiceDate}</div>
+						<div>Bills on {formattedNextInvoiceDate}</div>
 					</div>
 				</div>
 				<div style={itemStyle}>
@@ -65,7 +84,7 @@ function SubscriptionDetails({
 					<div>
 						<div style={titleStyle}>Free trial</div>
 						<div>{trialDays} day trial</div>
-						<div>Ends on {trialEndDate}</div>
+						<div>Ends on {formattedTrialEndDate}</div>
 					</div>
 				</div>
 			</div>
@@ -74,9 +93,7 @@ function SubscriptionDetails({
 }
 
 SubscriptionDetails.propTypes = {
-	startDate: PropTypes.string.isRequired,
-	firstInvoiceDate: PropTypes.string.isRequired,
-	trialEndDate: PropTypes.string.isRequired,
+	trialDays: PropTypes.number.isRequired,
 };
 
 export default SubscriptionDetails;
