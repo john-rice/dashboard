@@ -823,107 +823,91 @@ class NewCluster extends Component {
 									currValue={this.state.vm_machine}
 								/>
 							</div>
-							{!isUsingClusterTrial && (
-								<div className={card}>
-									<div className="col light">
-										<h3> Pick the provider </h3>
-									</div>
-									<div
-										className={settingsItem}
-										css={{
-											padding: 30,
+							<div className={card}>
+								<div className="col light">
+									<h3> Pick the provider </h3>
+								</div>
+								<div
+									className={settingsItem}
+									css={{
+										padding: 30,
+									}}
+								>
+									<Button
+										type={
+											provider === 'gke'
+												? 'primary'
+												: 'default'
+										}
+										size="large"
+										style={{
+											height: '160px',
+											marginRight: 20,
+											backgroundColor:
+												provider === 'gke'
+													? '#eaf5ff'
+													: '#fff',
+										}}
+										className={
+											provider === 'gke'
+												? fadeOutStyles
+												: ''
+										}
+										onClick={() => {
+											this.handleProviderChange('gke');
+											this.setConfig('pingTimeStatus', {
+												time: 0,
+												isLoading: true,
+											});
+											if (interval)
+												clearInterval(interval);
+											this.getPingTime(this.state.region);
 										}}
 									>
-										<Button
-											type={
-												provider === 'gke'
-													? 'primary'
-													: 'default'
-											}
-											size="large"
-											style={{
-												height: '160px',
-												marginRight: 20,
-												backgroundColor:
-													provider === 'gke'
-														? '#eaf5ff'
-														: '#fff',
-											}}
-											className={
-												provider === 'gke'
-													? fadeOutStyles
-													: ''
-											}
-											onClick={() => {
-												this.handleProviderChange(
-													'gke',
-												);
-												this.setConfig(
-													'pingTimeStatus',
-													{
-														time: 0,
-														isLoading: true,
-													},
-												);
-												if (interval)
-													clearInterval(interval);
-												this.getPingTime(
-													this.state.region,
-												);
-											}}
-										>
-											<img
-												width="120"
-												src="/static/images/clusters/google.png"
-												alt="Google"
-											/>
-										</Button>
-										<Button
-											size="large"
-											type={
+										<img
+											width="120"
+											src="/static/images/clusters/google.png"
+											alt="Google"
+										/>
+									</Button>
+									<Button
+										size="large"
+										type={
+											provider === 'aws'
+												? 'primary'
+												: 'default'
+										}
+										style={{
+											height: '160px',
+											backgroundColor:
 												provider === 'aws'
-													? 'primary'
-													: 'default'
-											}
-											style={{
-												height: '160px',
-												backgroundColor:
-													provider === 'aws'
-														? '#eaf5ff'
-														: '#fff',
-											}}
-											className={
-												provider === 'aws'
-													? fadeOutStyles
-													: ''
-											}
-											onClick={() => {
-												this.handleProviderChange(
-													'aws',
-												);
-												this.setConfig(
-													'pingTimeStatus',
-													{
-														time: 0,
-														isLoading: true,
-													},
-												);
-												if (interval)
-													clearInterval(interval);
-												this.getPingTime(
-													this.state.region,
-												);
-											}}
-										>
-											<img
-												width="120"
-												src="/static/images/clusters/aws.png"
-												alt="aws"
-											/>
-										</Button>
-									</div>
+													? '#eaf5ff'
+													: '#fff',
+										}}
+										className={
+											provider === 'aws'
+												? fadeOutStyles
+												: ''
+										}
+										onClick={() => {
+											this.handleProviderChange('aws');
+											this.setConfig('pingTimeStatus', {
+												time: 0,
+												isLoading: true,
+											});
+											if (interval)
+												clearInterval(interval);
+											this.getPingTime(this.state.region);
+										}}
+									>
+										<img
+											width="120"
+											src="/static/images/clusters/aws.png"
+											alt="aws"
+										/>
+									</Button>
 								</div>
-							)}
+							</div>
 							<div className={card}>
 								<div className="col light">
 									<h3> Pick a region </h3>
