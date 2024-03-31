@@ -32,6 +32,7 @@ const FullHeader = ({
 	user,
 	apps,
 	cluster,
+	isTrialEligible,
 	isUsingTrial,
 	isUsingClusterTrial,
 	daysLeft,
@@ -83,6 +84,7 @@ const FullHeader = ({
 		>
 			{(isCluster ? isUsingClusterTrial : isUsingTrial) && (
 				<TrialButton
+					isTrialEligible={isTrialEligible}
 					showButton={isCluster}
 					currentApp={currentApp}
 					cluster={cluster}
@@ -114,6 +116,7 @@ const FullHeader = ({
 			defaultSelectedKeys={[window.location.pathname]}
 			isUsingTrial={isUsingTrial}
 			daysLeft={daysLeft}
+			isTrialEligible={isTrialEligible}
 		/>
 	</Header>
 );
@@ -133,6 +136,7 @@ FullHeader.propTypes = {
 	cluster: string,
 	clusters: array,
 	currentApp: string.isRequired,
+	isTrialEligible: bool,
 	isCluster: bool,
 	trialMessage: string,
 	isUsingTrial: bool.isRequired,
@@ -157,6 +161,7 @@ const mapStateToProps = state => {
 		isUsingClusterTrial: get(state, '$getUserPlan.cluster_trial') || false,
 		daysLeft: get(state, '$getUserPlan.daysLeft', 0),
 		clusterDaysLeft: get(state, '$getUserPlan.clusterDaysLeft', 0),
+		isTrialEligible: get(state, '$getUserPlan.isTrialEligible', false),
 		currentApp,
 	};
 };

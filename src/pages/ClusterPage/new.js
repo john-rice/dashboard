@@ -271,6 +271,7 @@ class NewCluster extends Component {
 	};
 
 	setConfig = (type, value) => {
+		console.log('type', type, 'value', value);
 		this.setState({
 			[type]: value,
 		});
@@ -651,7 +652,7 @@ class NewCluster extends Component {
 			changed,
 			pricing_plan,
 		} = this.state;
-		const { isUsingClusterTrial } = this.props;
+		const { isUsingClusterTrial, isTrialEligible } = this.props;
 
 		if (isLoading) return <Loader />;
 		const versions =
@@ -775,6 +776,7 @@ class NewCluster extends Component {
 				<Container>
 					{this.state.isStripeCheckoutOpen && (
 						<StripeCheckout
+							isTrialEligible={isTrialEligible}
 							visible={this.state.isStripeCheckoutOpen}
 							plan={PLAN_LABEL[this.state.pricing_plan]}
 							price={EFFECTIVE_PRICE_BY_PLANS[
@@ -790,9 +792,7 @@ class NewCluster extends Component {
 					{isUsingClusterTrial && this.state.vm_machine ? (
 						<Alert
 							type="warning"
-							message={`We only support Sandbox plan for a free trial. Creating a ${pricingPlanArr.join(
-								'-',
-							)} plan cluster will require adding a payment method`}
+							message="The trial duration is updated based on the selected plan."
 							showIcon
 							size="small"
 							style={{
@@ -809,6 +809,7 @@ class NewCluster extends Component {
 									<p> Scale as you go </p>
 								</div>
 								<PricingSlider
+									isTrialEligible={isTrialEligible}
 									key={
 										this.state.provider +
 										String(this.isLegacyPage())
@@ -822,107 +823,91 @@ class NewCluster extends Component {
 									currValue={this.state.vm_machine}
 								/>
 							</div>
-							{!isUsingClusterTrial && (
-								<div className={card}>
-									<div className="col light">
-										<h3> Pick the provider </h3>
-									</div>
-									<div
-										className={settingsItem}
-										css={{
-											padding: 30,
+							<div className={card}>
+								<div className="col light">
+									<h3> Pick the provider </h3>
+								</div>
+								<div
+									className={settingsItem}
+									css={{
+										padding: 30,
+									}}
+								>
+									<Button
+										type={
+											provider === 'gke'
+												? 'primary'
+												: 'default'
+										}
+										size="large"
+										style={{
+											height: '160px',
+											marginRight: 20,
+											backgroundColor:
+												provider === 'gke'
+													? '#eaf5ff'
+													: '#fff',
+										}}
+										className={
+											provider === 'gke'
+												? fadeOutStyles
+												: ''
+										}
+										onClick={() => {
+											this.handleProviderChange('gke');
+											this.setConfig('pingTimeStatus', {
+												time: 0,
+												isLoading: true,
+											});
+											if (interval)
+												clearInterval(interval);
+											this.getPingTime(this.state.region);
 										}}
 									>
-										<Button
-											type={
-												provider === 'gke'
-													? 'primary'
-													: 'default'
-											}
-											size="large"
-											style={{
-												height: '160px',
-												marginRight: 20,
-												backgroundColor:
-													provider === 'gke'
-														? '#eaf5ff'
-														: '#fff',
-											}}
-											className={
-												provider === 'gke'
-													? fadeOutStyles
-													: ''
-											}
-											onClick={() => {
-												this.handleProviderChange(
-													'gke',
-												);
-												this.setConfig(
-													'pingTimeStatus',
-													{
-														time: 0,
-														isLoading: true,
-													},
-												);
-												if (interval)
-													clearInterval(interval);
-												this.getPingTime(
-													this.state.region,
-												);
-											}}
-										>
-											<img
-												width="120"
-												src="/static/images/clusters/google.png"
-												alt="Google"
-											/>
-										</Button>
-										<Button
-											size="large"
-											type={
+										<img
+											width="120"
+											src="/static/images/clusters/google.png"
+											alt="Google"
+										/>
+									</Button>
+									<Button
+										size="large"
+										type={
+											provider === 'aws'
+												? 'primary'
+												: 'default'
+										}
+										style={{
+											height: '160px',
+											backgroundColor:
 												provider === 'aws'
-													? 'primary'
-													: 'default'
-											}
-											style={{
-												height: '160px',
-												backgroundColor:
-													provider === 'aws'
-														? '#eaf5ff'
-														: '#fff',
-											}}
-											className={
-												provider === 'aws'
-													? fadeOutStyles
-													: ''
-											}
-											onClick={() => {
-												this.handleProviderChange(
-													'aws',
-												);
-												this.setConfig(
-													'pingTimeStatus',
-													{
-														time: 0,
-														isLoading: true,
-													},
-												);
-												if (interval)
-													clearInterval(interval);
-												this.getPingTime(
-													this.state.region,
-												);
-											}}
-										>
-											<img
-												width="120"
-												src="/static/images/clusters/aws.png"
-												alt="aws"
-											/>
-										</Button>
-									</div>
+													? '#eaf5ff'
+													: '#fff',
+										}}
+										className={
+											provider === 'aws'
+												? fadeOutStyles
+												: ''
+										}
+										onClick={() => {
+											this.handleProviderChange('aws');
+											this.setConfig('pingTimeStatus', {
+												time: 0,
+												isLoading: true,
+											});
+											if (interval)
+												clearInterval(interval);
+											this.getPingTime(this.state.region);
+										}}
+									>
+										<img
+											width="120"
+											src="/static/images/clusters/aws.png"
+											alt="aws"
+										/>
+									</Button>
 								</div>
-							)}
+							</div>
 							<div className={card}>
 								<div className="col light">
 									<h3> Pick a region </h3>
@@ -1309,32 +1294,18 @@ class NewCluster extends Component {
 										{this.state.error}
 									</p>
 								) : null}
-								{(isUsingClusterTrial &&
-									this.state.pricing_plan !==
-										CLUSTER_PLANS.SANDBOX_2023) ||
-								clusters.length > 0 ? (
-									<Button
-										type="primary"
-										size="large"
-										disabled={
-											!this.validateClusterName() ||
-											!this.state.region
-										}
-										onClick={this.handleStripeModal}
-									>
-										Add payment info and create cluster
-										<ArrowRightOutlined />
-									</Button>
-								) : (
-									<Button
-										type="primary"
-										size="large"
-										onClick={this.createCluster}
-									>
-										Create Cluster
-										<ArrowRightOutlined />
-									</Button>
-								)}
+								<Button
+									type="primary"
+									size="large"
+									disabled={
+										!this.validateClusterName() ||
+										!this.state.region
+									}
+									onClick={this.handleStripeModal}
+								>
+									Add payment info and create cluster
+									<ArrowRightOutlined />
+								</Button>
 							</div>
 						</article>
 					</section>
@@ -1347,12 +1318,14 @@ class NewCluster extends Component {
 const mapStateToProps = state => ({
 	isUsingClusterTrial: get(state, '$getUserPlan.cluster_trial') || false,
 	clusterTrialEndDate: get(state, '$getUserPlan.cluster_tier_validity') || 0,
+	isTrialEligible: get(state, '$getUserPlan.is_trial_eligible', false),
 });
 
 NewCluster.propTypes = {
 	isUsingClusterTrial: PropTypes.bool.isRequired,
 	history: PropTypes.object.isRequired,
 	clusterTrialEndDate: PropTypes.number,
+	isTrialEligible: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, null)(NewCluster);
