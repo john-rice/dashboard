@@ -15,6 +15,9 @@ function SubscriptionDetails({ trialDays }) {
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		width: '100%',
+		paddingTop: '5px',
+		paddingBottom: '15px',
+		marginBottom: '10px',
 	};
 
 	const itemStyle = {
