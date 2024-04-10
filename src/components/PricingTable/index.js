@@ -394,12 +394,6 @@ class PricingTable extends Component {
 									<br />
 									<small>/month</small>
 								</Price>
-								<Caption>
-									<a href="https://appbase.io/static/poweredby_logo_placement.zip">
-										Requires reactivesearch.io logo
-										placement
-									</a>
-								</Caption>
 							</td>
 							<td>
 								<Title>BOOTSTRAP</Title>
@@ -533,7 +527,7 @@ class PricingTable extends Component {
 								>
 									<span>
 										<a
-											href="https://appbase.io/pricing#features"
+											href="https://reactivesearch.io/pricing#features"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
@@ -554,7 +548,7 @@ class PricingTable extends Component {
 								>
 									<span>
 										<a
-											href="https://appbase.io/pricing#features"
+											href="https://reactivesearch.io/pricing#features"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
@@ -579,7 +573,7 @@ class PricingTable extends Component {
 								>
 									<span>
 										<a
-											href="https://appbase.io/pricing#features"
+											href="https://reactivesearch.io/pricing#features"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
@@ -600,7 +594,7 @@ class PricingTable extends Component {
 								>
 									<span>
 										<a
-											href="https://appbase.io/pricing#features"
+											href="https://reactivesearch.io/pricing#features"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
@@ -633,7 +627,7 @@ class PricingTable extends Component {
 								Support and Guidance
 								<small>
 									<a
-										href="https://appbase.io/pricing#support"
+										href="https://reactivesearch.io/pricing#support"
 										target="_blank"
 										rel="noopener noreferrer"
 									>
@@ -679,7 +673,7 @@ class PricingTable extends Component {
 								>
 									<span>
 										<a
-											href="https://appbase.io/pricing#support"
+											href="https://reactivesearch.io/pricing#support"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
@@ -700,7 +694,7 @@ class PricingTable extends Component {
 								>
 									<span>
 										<a
-											href="https://appbase.io/pricing#support"
+											href="https://reactivesearch.io/pricing#support"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
@@ -721,7 +715,7 @@ class PricingTable extends Component {
 								>
 									<span>
 										<a
-											href="https://appbase.io/pricing#support"
+											href="https://reactivesearch.io/pricing#support"
 											target="_blank"
 											rel="noopener noreferrer"
 										>

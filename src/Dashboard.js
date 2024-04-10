@@ -76,7 +76,7 @@ class Dashboard extends Component {
 							Back to Dashboard
 						</Button>
 						<Button
-							href="mailto:support@appbase.io"
+							href="mailto:support@reactivesearch.io"
 							target="_blank"
 							size="large"
 							danger
