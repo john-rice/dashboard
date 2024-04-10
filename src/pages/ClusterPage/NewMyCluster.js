@@ -616,7 +616,7 @@ class NewMyCluster extends Component {
 										paddingBottom: 20,
 									}}
 								>
-									<Tooltip title="Don't already have an ElasticSearch Cluster? Get a hosted ElasticSearch cluster with appbase.io.">
+									<Tooltip title="Don't already have an ElasticSearch Cluster? Get a hosted ElasticSearch cluster with reactivesearch.io.">
 										<Button
 											size="large"
 											type="primary"
