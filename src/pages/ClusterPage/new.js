@@ -709,22 +709,6 @@ class NewCluster extends Component {
 								gap: '10px',
 							}}
 						>
-							<Tooltip title="Serverless search is a geo-distributed search index, takes 1 min to get up and running">
-								<Button
-									size="large"
-									type="default"
-									target="_blank"
-									rel="noopener noreferrer"
-									onClick={() => {
-										if (interval) clearInterval(interval);
-										this.props.history.push(
-											'/new/serverless-search',
-										);
-									}}
-								>
-									Go to Serverless Search instead
-								</Button>
-							</Tooltip>
 							{this.isLegacyPage() ? (
 								<Tooltip title="Create a Search Cluster">
 									<Button

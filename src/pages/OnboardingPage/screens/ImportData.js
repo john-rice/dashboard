@@ -152,7 +152,7 @@ export default class Introduction extends Component {
 					<div>
 						<h3>
 							There are three ways to bring your data into
-							appbase.io:
+							reactivesearch.io:
 						</h3>
 
 						<div className="feature-list">
