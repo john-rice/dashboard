@@ -702,14 +702,6 @@ class ClusterPage extends Component {
 								flexWrap: 'wrap',
 							}}
 						>
-							<Link to="/new/serverless-search">
-								<Tooltip title="Serverless search is a geo-distributed search index, takes 1 min to get up and running">
-									<Button type="primary">
-										<i className="fas fa-plus" />
-										&nbsp; Serverless Search
-									</Button>
-								</Tooltip>
-							</Link>
 							<Link to="/clusters/new">
 								<Tooltip title="Setup Elasticsearch or OpenSearch with ReactiveSearch in a cloud region of your choice.">
 									<Button type="default">
@@ -760,14 +752,6 @@ class ClusterPage extends Component {
 									{' '}
 									<Button size="large" type="primary" block>
 										<PlusOutlined /> Search cluster
-									</Button>
-								</Tooltip>
-							</Link>
-							<Link to="/new/serverless-search">
-								<Tooltip title="Serverless search is a geo-distributed search index, takes 1 min to get up and running">
-									{' '}
-									<Button size="large" type="default" block>
-										<PlusOutlined /> Serverless Search
 									</Button>
 								</Tooltip>
 							</Link>
