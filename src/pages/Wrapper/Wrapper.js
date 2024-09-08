@@ -94,7 +94,7 @@ const Wrapper = ({ user }) =>
 			<Route exact path="/signup" component={ClusterPage} />
 			<Route exact path="/tutorial" component={OnboardingPage} />
 			<Route exact path="/tutorial/finish" component={EndPage} />
-			<Route exact path="/marketplace" component={MarketPlacePage} />
+			<Route exact path="/templates" component={MarketPlacePage} />
 			<Route exact path="/apps" component={HomePage} />
 			<Route path="/clusters/new/hosted" component={NewClusterPage} />
 			<Route path="/clusters/new/my-cluster" component={NewMyCluster} />

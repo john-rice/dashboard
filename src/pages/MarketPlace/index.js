@@ -5,8 +5,8 @@ const MarketPlace = ({ showNavbar = true }) => (
 	<React.Fragment>
 		{showNavbar ? <FullHeader /> : null}
 		<iframe
-			src="https://reactiveapps.io/?header=hide"
-			title="MarketPlace"
+			src="https://opensource.reactivesearch.io/templates"
+			title="Templates"
 			style={{
 				width: '100%',
 				height: '100vh',
